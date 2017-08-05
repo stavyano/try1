@@ -1,0 +1,33 @@
+﻿
+<div class="content" id="Login" ng-controller="loginController as loginCtrl">
+    <form class="forms" name="loginForm" ng-submit="loginCtrl.login(loginForm.$valid)" novalidate>
+        <fieldset>
+            <legend>Login</legend>
+            <table>
+                <p></p>
+                <tr>
+                    <td><label>Username</label>
+                    <td><input name="usernamelogin" type="text" ng-model="loginCtrl.username" ng-required="true"></td>
+                    <td ng-show="loginForm.usernamelogin.$invalid && !loginForm.usernamelogin.$pristine">user name is required!</td>
+                </tr>
+                <tr>
+                    <td><label>Password</label></td>
+                    <td><input name="passwordlogin" type="password" ng-model="loginCtrl.password" ng-required="true"></td>
+                    <td ng-show="loginForm.passwordlogin.$invalid && !loginForm.passwordlogin.$pristine">password is required!</td>
+
+                </tr>
+                <tr>
+                    <td><input type="checkbox" ng-model="loginCtrl.cookie"><label>Remember Me</label></td>
+                </tr>
+                <tr>
+                    <td><input id="submitformlogin" type="submit" class="sub" value="Login" ng-disabled="loginForm.$invalid"></td>
+                    <td><input id="forgotPassword" type="button" value="Forgot your Password" ng-click="loginCtrl.retrive()"></td>
+                </tr>
+                <tr>
+                    <td><p class="error" ng-show="mainCtrl.isError">invalid user name and password</p></td>
+                </tr>
+            </table>
+        </fieldset>
+    </form>
+ 
+</div>

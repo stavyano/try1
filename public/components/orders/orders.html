@@ -1,0 +1,49 @@
+<div class="content" id="Orders" ng-controller="ordersController as ordersCtrl">
+    <div ng-init="ordersCtrl.init()">
+        <h1>{{ordersCtrl.service.user.UserName}}'s orders</h1>
+        <table ng-show="ordersCtrl.orders.length!=0">
+            <thead>
+            <tr>
+                <td width="100px">Order Id</td>
+                <td width="100px">Order Date</td>
+                <td width="100px">Total Price</td>
+                <td></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="o in ordersCtrl.orders">
+                <td >{{o.OrderID}}</td>
+                <td>{{o.OrderDate}}</td>
+                <td>{{o.TotalAmount +" " + o.Currency}}</td>
+                <td ng-click="ordersCtrl.showInfo(o.OrderID)"><input type="button" value="Show Order Info"/></td>
+            </tr>
+            </tbody>
+        </table>
+        <p ng-show="ordersCtrl.orders.length==0">no orders to show</p>
+    </div>
+    <div id="orderInfo">
+        <div class="modal-content">
+            <span class="close4">&times;</span>
+            <p>Order ID: {{ordersCtrl.orderInfo.OrderID}}</p>
+            <p>Order Date: {{ordersCtrl.orderInfo.OrderDate}}</p>
+            <p>Shipment Date: {{ordersCtrl.orderInfo.ShipmentDate}}</p>
+            <p>Total Price: {{ordersCtrl.orderInfo.TotalAmount+" "+ordersCtrl.orderInfo.Currency}}</p>
+            <p>Movies In Order:
+            <table align="center">
+            <thead>
+            <tr>
+                <td>Movie Name</td>
+                <td>Amount</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="movie in ordersCtrl.orderInfo.Movies">
+                <td>{{movie.MovieName}}</td>
+                <td>{{movie.Amount}}</td>
+            </tr>
+            </tbody>
+            </table>
+            </p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,105 @@
+﻿<div class="content" id="Movies" ng-controller="movieController as movieCtrl" ng-init="movieCtrl.init()">
+    <div id="Recommended" ng-show="movieCtrl.service.isLoggedIn">
+        <h1>Recommended Movies for you</h1>
+        <table>
+            <tr>
+                <td width="150px" ng-repeat="movie in movieCtrl.recommended" ng-click="movieCtrl.showInfo(movieCtrl.recommended,movie.MovieName)">{{movie.MovieName}}</td>
+            </tr>
+            <tr>
+                <td  ng-repeat="movie in movieCtrl.recommended"><img class="movieImg" ng-click="movieCtrl.showInfo(movieCtrl.recommended,movie.MovieName)" src="../../assets/images/{{movie.PicturePath}}"/></td>
+            </tr>
+        </table>
+    </div>
+    <div id="CurrentMovies">
+        <h1>Our Movies</h1>
+        <label>Here are all our available movies.</br>Click a movie or it's picture in order to get it's entire details.</br></label>
+        <label>Choose category in order to filter all movies: </label><select ng-model="movieCtrl.category" ng-options="Category.CategoryName for Category in mainCtrl.Categories1"></select>
+        <label></br>Choose parameter to sort the movies by: </label><select ng-model="movieCtrl.paramMovie" ng-options="parameter.key for parameter in movieCtrl.parameters"></select>
+        <label>reverse sort</label><input type="checkbox" ng-model="movieCtrl.reverse">
+        <div id="presentMovies">
+        <table>
+            <thead>
+            <tr>
+                <td width="200px">Movie Name</td>
+                <td width="100px">Year</td>
+                <td width="200px">Director</td>
+                <td></td>
+                <td ng-show="movieCtrl.service.isLoggedIn">Add to cart</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="movie in movieCtrl.allMovies | categoryFilter:movieCtrl.category.CategoryName | orderBy:movieCtrl.paramMovie.value:movieCtrl.reverse">
+                <td ng-click="movieCtrl.showInfo(movieCtrl.allMovies,movie.MovieName)">{{movie.MovieName}}</td>
+                <td ng-click="movieCtrl.showInfo(movieCtrl.allMovies,movie.MovieName)">{{movie.Year}}</td>
+                <td ng-click="movieCtrl.showInfo(movieCtrl.allMovies,movie.MovieName)">{{movie.Director}}</td>
+                <td><img class="movieImg" ng-click="movieCtrl.showInfo(movieCtrl.allMovies,movie.MovieName)" src="../../assets/images/{{movie.PicturePath}}"/></td>
+                <td ng-show="movieCtrl.service.isLoggedIn"><input type="number" ng-model="movieCtrl.amounts[movie.MovieName]" value="1" min="1" width="5px"/><input type="button" value="Add" ng-click="movieCtrl.AddToCart(movie.MovieName,movieCtrl.amounts[movie.MovieName])"/> </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+    <div id="movieInfo">
+        <div class="modal-content">
+            <span class="close3">&times;</span>
+            <table>
+                <br/>
+                <tr>
+                    <td rowspan="7">
+                        <img class="movieImgInfo" ng-src="../../assets/images/{{movieCtrl.movieInfo.PicturePath}}"/>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td width="20px">
+
+                    </td>
+                    <td>
+                        Movie Name: {{movieCtrl.movieInfo.MovieName}}
+                    </td>
+                </tr>
+                <tr>
+                    <td width="20px">
+
+                    </td>
+                    <td>
+                        Year: {{movieCtrl.movieInfo.Year}}
+                    </td>
+                </tr>
+                <tr>
+                    <td width="20px">
+
+                    </td>
+                    <td>
+                        Description: {{movieCtrl.movieInfo.Description}}
+                    </td>
+                </tr>
+                <tr>
+                    <td width="20px">
+
+                    </td>
+                    <td>
+                        Director: {{movieCtrl.movieInfo.Director}}
+                    </td>
+                </tr>
+                <tr>
+                    <td width="20px">
+
+                    </td>
+                    <td>
+                        Production: {{movieCtrl.movieInfo.Production}}
+                    </td>
+                </tr>
+                <tr>
+                    <td width="20px">
+
+                    </td>
+                    <td>
+                        Price: {{movieCtrl.movieInfo.Price}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+

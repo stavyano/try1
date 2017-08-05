@@ -1,0 +1,84 @@
+﻿<div class="content" id="Register" ng-controller="registerController as registerCtrl">
+    <form class="forms" name="signupForm" enctype="text/plain" ng-submit="registerCtrl.register(signupForm.$valid)" novalidate>
+        <fieldset>
+            <legend>Register</legend>
+            <table>
+                <p></p>
+                <tr>
+                    <td><label>First Name</label></td>
+                    <td><input ng-model="registerCtrl.r1" name="firstname" type="text" ng-required="true" ></td>
+                    <td ng-show="signupForm.firstname.$invalid && !signupForm.firstname.$pristine">first name is required!</td>
+                </tr>
+                <tr>
+                    <td><label>Last Name</label></td>
+                    <td><input ng-model="registerCtrl.r2" name="lastname" type="text" ng-required="true"></td>
+                    <td ng-show="signupForm.lastname.$invalid && !signupForm.lastname.$pristine">last name is required!</td>
+                </tr>
+                <tr>
+                    <td><label>Address</label></td>
+                    <td><input ng-model="registerCtrl.r3" name="address" type="text" ng-required="true"></td>
+                    <td ng-show="signupForm.address.$invalid && !signupForm.address.$pristine">address is required!</td>
+
+                </tr>
+                <tr>
+                    <td><label>City</label></td>
+                    <td><input ng-model="registerCtrl.r4" id="password" name="city" type="text"></td>
+                </tr>
+                <tr>
+                    <td><label>Country</label></td>
+                    <td><select ng-model="registerCtrl.selectedCountry" ng-options="Country.Name for Country in mainCtrl.Countries" /></td>
+                </tr>
+                <tr>
+                    <td><label>Phone</label></td>
+                    <td><input ng-model="registerCtrl.r5" id="phone" name="phone" type="text"></td>
+                </tr>
+                <tr>
+                    <td><label>Cellular</label></td>
+                    <td><input ng-model="registerCtrl.r6" id="cellular" name="cellular" type="text"></td>
+                </tr>
+                <tr>
+                    <td><label>Email</label></td>
+                    <td><input ng-model="registerCtrl.r7" id="email" name="email" type="email"></td>
+                    <td ng-show="signupForm.email.$invalid && !signupForm.email.$pristine">email must contain @</td>
+                </tr>
+                <tr>
+                    <td><label>Credit Card Number</label></td>
+                    <td><input ng-model="registerCtrl.r8" id="creditcard" name="creditcard" type="text"></td>
+                </tr>
+                <tr>
+                    <td><label>Grandmother</label></td>
+                    <td><input ng-model="registerCtrl.r9" name="grandmother" type="text" ng-required="true"></td>
+                    <td ng-show="signupForm.grandmother.$invalid && !signupForm.grandmother.$pristine">grandmother is required!</td>
+                </tr>
+                <tr>
+                    <td><label>Teacher</label></td>
+                    <td><input ng-model="registerCtrl.r10" id="teacher" type="text" ng-required="true"></td>
+                    <td ng-show="signupForm.teacher.$invalid && !signupForm.teacher.$pristine">teacher is required!</td>
+                </tr>
+                <tr>
+                    <td><label>User Name</label></td>
+                    <td><input ng-model="registerCtrl.r11" name="username" type="text" ng-required="true" ng-pattern="/^[a-zA-Z]*$/" ng-minlength="3" ng-maxlength="8"></td>
+                    <td ng-show="signupForm.username.$invalid && !signupForm.username.$pristine">user name is required, 3-8 english letters only!</td>
+                </tr>
+                <tr>
+                    <td><label >Password</label></td>
+                    <td><input ng-model="registerCtrl.r12" name="password" type="password" ng-required="true" ng-pattern="/^[a-zA-Z0-9]*$/" ng-minlength="5" ng-maxlength="10"></td>
+                    <td ng-show="signupForm.password.$invalid && !signupForm.password.$pristine">password is required, 5-10 english letters and digits only!</td>
+                </tr>
+                <tr>
+                    <td><label >Confirm password</label></td>
+                    <td><input name="registerCtrl.confirm_password" type="password" ng-required="true" ng-pattern="/^[a-zA-Z0-9]*$/" ng-minlength="5" ng-maxlength="10"></td>
+                    <td ng-show="signupForm.confirm_password.$invalid && !signupForm.confirm_password.$pristine">confirm password is required!</td>
+                </tr>
+
+                <tr>
+                    <td><label>Category</label></td>
+                    <td><select multiple ng-model="registerCtrl.selectedCategory" ng-options="Category.CategoryName for Category in mainCtrl.Categories" /></td>
+                </tr>
+                <tr>
+                    <td><input id="submitform" type="submit" class="sub" value="Register" ng-disabled="signupForm.$invalid"></td>
+                </tr>
+            </table>
+        </fieldset>
+    </form>
+</div>

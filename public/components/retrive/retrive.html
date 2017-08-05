@@ -1,0 +1,36 @@
+﻿<div class="content" id="Login" ng-controller="retriveController as retriveCtrl">
+    <form class="forms" name="retrivePasswordForm" ng-submit="retriveCtrl.retrive(retrivePasswordForm.$valid)" novalidate>
+        <fieldset>
+            <legend>Retrive Password</legend>
+            <table>
+                <tr>
+                    <td><label>User Name</label>
+                    <td><input id="username" ng-required="true" name="username" type="text" ng-model="retriveCtrl.username"></td>
+                    <td><p ng-show="retrivePasswordForm.username.$invalid && !retrivePasswordForm.username.$pristine">user name is required!</p></td>
+
+                </tr>
+                <tr>
+                    <td><label>Address</label>
+                    <td><input id="address" ng-required="true" name="address" type="text" ng-model="retriveCtrl.address"></td>
+                    <td><p ng-show="retrivePasswordForm.address.$invalid && !retrivePasswordForm.address.$pristine">address is required!</p></td>
+
+                </tr>
+                <tr>
+                    <td><label>Teacher</label></td>
+                    <td><input id="teacher" name="teacher" type="text" ng-model="retriveCtrl.teacher"></td>
+                    <td><p ng-show="retrivePasswordForm.teacher.$invalid && !retrivePasswordForm.teacher.$pristine">teacher is required!</p></td>
+
+                </tr>
+                <tr>
+                    <td><label>Grand Mother</label></td>
+                    <td><input id="grandmother"  ng-required="true" name="grandmother" type="text" ng-model="retriveCtrl.grandmother"></td>
+                    <td><p ng-show="retrivePasswordForm.grandmother.$invalid && !retrivePasswordForm.grandmother.$pristine">grandmother is required!</p></td>
+
+                </tr>
+                <tr>
+                    <td><input id="forgotPassword"  ng-required="true" type="submit" value="get password" ng-disabled="retrivePasswordForm.$invalid"></td>
+                </tr>
+            </table>
+        </fieldset>
+    </form>
+    </div>

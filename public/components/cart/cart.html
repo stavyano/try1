@@ -1,0 +1,25 @@
+<div class="content" id="Cart" ng-controller="cartController as cartCtrl" ng-init="cartCtrl.init()">
+    <h1>{{cartCtrl.service.user.UserName}}'s cart</h1>
+    <table ng-show="cartCtrl.cart.length!=0">
+        <thead>
+        <tr>
+            <td width="200px">Movie Name</td>
+            <td width="200px">Year</td>
+            <td width="200px">Amount</td>
+            <td width="200px">Total Price</td>
+            <td width="200px"></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in cartCtrl.cart">
+            <td>{{item.MovieName}}</td>
+            <td>{{item.MovieYear}}</td>
+            <td> {{item.MovieAmount}}</td>
+            <td>{{item.MovieAmount * item.MoviePrice}}</td>
+            <td><img class="cartimg" ng-src="../../assets/images/plus.png" ng-click="cartCtrl.plusitem(item.MovieName)"/><img class="cartimg" ng-src="../../assets/images/minus.png" ng-click="cartCtrl.minusitem(item.MovieName)"/><img class="cartimg" ng-src="../../assets/images/remove.png" ng-click="cartCtrl.deleteitem(item.MovieName)"/> </td>
+        </tr>
+        </tbody>
+    </table>
+    <p ng-show="cartCtrl.cart.length==0">There are no items in your cart.</p>
+    <input ng-show="!cartCtrl.cart.length==0" type="button" ng-click="cartCtrl.buy()" value="buy cart"/>
+</div>

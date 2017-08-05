@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html >
+<html ng-app="MovieShop">
+<head>
+	<title>Adar&Stav MoviesShop</title>
+	<script type="text/javascript" src="components/scripts/angular.js"></script>
+	<script type="text/javascript" src="app.js"></script>
+	<script type="text/javascript" src="components/scripts/angular-local-storage.js"></script>
+	<script type="text/javascript" src="components/login/loginController.js"></script>
+	<script type="text/javascript" src="components/login/loginService.js"></script>
+	<script type="text/javascript" src="components/retrive/retriveController.js"></script>
+	<script type="text/javascript" src="components/retrive/retriveService.js"></script>
+    <script type="text/javascript" src="components/movie/movieController.js"></script>
+    <script type="text/javascript" src="components/movie/movieService.js"></script>
+    <script type="text/javascript" src="components/orders/ordersController.js"></script>
+    <script type="text/javascript" src="components/orders/ordersService.js"></script>
+	<script type="text/javascript" src="components/register/registerController.js"></script>
+	<script type="text/javascript" src="components/register/registerService.js"></script>
+    <script type="text/javascript" src="components/search/searchController.js"></script>
+    <script type="text/javascript" src="components/search/searchService.js"></script>
+    <script type="text/javascript" src="components/cart/cartController.js"></script>
+    <script type="text/javascript" src="components/cart/cartService.js"></script>
+	<script type="text/javascript" src="components/scripts/xml2json.js"></script>
+	<script type="text/javascript" src="components/scripts/angular-route.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="icon" href="assets/images/favicon.ico" />
+</head>
+<body>
+   <div ng-controller="mainController as mainCtrl" ng-init="mainCtrl.init()">
+       <div id="header">
+           <div id="logo">
+               <img id="logoImg" src="assets/images/logo.png"/>
+           </div>
+           <div ng-hide="mainCtrl.service.isLoggedIn" id="menu">
+               <ul id="menuUl">
+                   <li>UserName: guest</li>
+                   <li><a ng-href="#/home">Welcome</a></li>
+                   <li><a ng-href="#/register">Register</a></li>
+                   <li><a ng-href="#/login">Login</a></li>
+                   <li><a ng-href="#/movie">Movies</a></li>
+				   <li><a ng-href="#/search">Search Movie</a></li>
+				   <li style="float:right"><a class="active" ng-click="mainCtrl.about_f()">About</a></li>
+               </ul>
+           </div><!--end content--> 
+		   <div id="menuUser" ng-show="mainCtrl.service.isLoggedIn" >
+			   <ul id="menuUl2">
+                   <li>UserName: {{mainCtrl.service.user.UserName}}</li>
+                   <li ng-show="mainCtrl.service.cookiesaved">Last Visit: {{mainCtrl.service.lastlogin}}</li>
+				   <li><a ng-click="mainCtrl.logout()">Log out</a></li>
+				   <li><a ng-href="#/movie">Movies</a></li>
+				   <li><a ng-href="#/search">Search Movie</a></li>
+                   <li><a ng-href="#/orders">Show Orders</a></li>
+                   <li style="float:right"><a class="active" ng-click="mainCtrl.about_f()">About</a></li>
+
+                   <li style="float:right"><a ng-href="#/cart"><img id="imagecart" src="assets/images/cart.png"/></a></li>
+               </ul>  
+           </div><!--end content--> 
+           <div id="menuAdmin">
+               <ul>
+                   <li><a ng-href="#/LogOut">Log out</a></li>
+                   <li><a ng-href="#/movies">Movies</a></li>
+                   <li><a ng-href="#/search">Search Movie</a></li>
+                   <li><a ng-href="#/Clients">Clients</a></li>
+                   <li><a ng-href="#/Orders">Orders</a></li>
+                   <li style="float:right"><a class="active" ng-click="mainCtrl.about_f()">About</a></li>
+               </ul>   
+           </div><!--end content--> 
+       </div><!--end header -->  
+       <div id="content" ng-view>
+       </div>
+       <div id="leftSidebar">
+           <h1>HOT 5</h1>
+           <table>
+               <thead>
+               <tr>
+                   <td>Movie Name</td>
+                   <td></td>
+               </tr>
+               </thead>
+               <tbody>
+               <tr ng-repeat="movie in mainCtrl.hot5Movies">
+                   <td ng-click="mainCtrl.showInfo(mainCtrl.hot5Movies,movie.MovieName)">{{movie.MovieName}}</td>
+                   <td><img class="movieImg" ng-click="mainCtrl.showInfo(mainCtrl.hot5Movies,movie.MovieName)" ng-src="assets/images/{{movie.PicturePath}}"/></td>
+               </tr>
+               </tbody>
+           </table>
+       </div><!--end sidebar-->  
+       <div id="rightSidebar" ng-show="mainCtrl.service.isLoggedIn"> 
+           <div>
+           <h1>NEW </h1>
+           <table>
+               <thead>
+               <tr>
+                   <td>Movie Name </td>
+                   <td></td>
+               </tr>
+               </thead>
+               <tbody>
+               <tr ng-repeat="movie in mainCtrl.newMovies">
+                   <td ng-click="mainCtrl.showInfo(mainCtrl.newMovies,movie.MovieName)">{{movie.MovieName}}</td>
+                   <td><img class="movieImg" ng-click="mainCtrl.showInfo(mainCtrl.newMovies,movie.MovieName)" ng-src="assets/images/{{movie.PicturePath}}"/></td>
+               </tr>
+               </tbody>
+           </table>
+           </div>
+       </div><!--end sidebar-->  
+       <div id="footer">  
+           Designed by <a href="mailto:adarv@post.bgu.ac.il?subject=Your%20Website%20rocks!&body=Please%20enter%20your%20comment%20here" style="text-align:center">Adar Vit & Stav Yanovsky</a>.
+           Dept. of software and information systems engineering, Ben Gurion University of the NEGEV
+       </div><!--end footer-->
+       <div id="movieInfoIndex">
+           <div class="modal-content">
+               <span class="close2">&times;</span>
+               <table>
+                <tr>
+                    <td rowspan="7">
+                        <br/>
+                        <img class="movieImgInfo" ng-src="assets/images/{{mainCtrl.movieInfo.PicturePath}}"/>
+                    </td>
+
+                </tr>
+                   <tr>
+                       <td width="20px">
+
+                       </td>
+                    <td>
+                        Movie Name: {{mainCtrl.movieInfo.MovieName}}
+                    </td>
+                   </tr>
+                   <tr>
+                       <td width="20px">
+
+                       </td>
+                       <td>
+                           Year: {{mainCtrl.movieInfo.Year}}
+                       </td>
+                   </tr>
+                   <tr>
+                       <td width="20px">
+
+                       </td>
+                       <td>
+                           Description: {{mainCtrl.movieInfo.Description}}
+                       </td>
+                   </tr>
+                   <tr>
+                       <td width="20px">
+
+                       </td>
+                       <td>
+                           Director: {{mainCtrl.movieInfo.Director}}
+                       </td>
+                   </tr>
+                   <tr>
+                       <td width="20px">
+
+                       </td>
+                       <td>
+                           Production: {{mainCtrl.movieInfo.Production}}
+                       </td>
+                   </tr>
+                   <tr>
+                       <td width="20px">
+
+                       </td>
+                       <td>
+                           Price: {{mainCtrl.movieInfo.Price}}
+                       </td>
+                   </tr>
+               </table>
+
+           </div>
+       </div>
+   </div>
+   <div id="about">
+       <div class="modal-content">
+           <span class="close1">&times;</span>
+           <p>This e-commerce website was developed by Stav Yanovsky And Adar Vit.</p>
+           <p>It is based on html, css, angularJS and nodeJS.</p>
+           <p>Our main difficulty in this exercise was understanding what is the diffrence between service responsibility and controller responsibility.  </p>
+           <p>here is a link to another website we have developed in the past <a href="http://pacmanadarstav.comeze.com">click here to play</a></p>
+       </div>
+   </div>
+</body>
+</html>
+
